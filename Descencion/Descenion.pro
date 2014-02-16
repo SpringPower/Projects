@@ -11,8 +11,26 @@ SOURCES += main.cpp \
     tileset.cpp \
     tilesetconfigs.cpp
 
-win32: LIBS += -L$$PWD/../Allegro/mingw32/lib/ -lallegro-static
+# OH YEAH!
+QMAKE_CXXFLAGS += -std='c++11'
 
+HEADERS += \
+    assertions.hpp \
+    config.hpp \
+    common.hpp \
+    gameloop.hpp \
+    memory.hpp \
+    tileset.hpp \
+    tilesetconfigs.hpp
+
+# Libraries!
+
+# Windows Libraries
+# Linking against supplied precompiled binaries because building
+# libraries on Windows is a hassle :(
+# Allegro:
+win32: LIBS += -L$$PWD/../Allegro/mingw32/lib/ -lallegro-static
+# Allegro Addons:
 win32: LIBS += -lallegro_acodec-static
 win32: LIBS += -lallegro_audio-static
 win32: LIBS += -lallegro_color-static
@@ -25,7 +43,7 @@ win32: LIBS += -lallegro_physfs-static
 win32: LIBS += -lallegro_primitives-static
 win32: LIBS += -lallegro_ttf-static
 win32: LIBS += -lallegro_video-static
-
+# Allegro dependencies
 win32: LIBS += -ldumb
 win32: LIBS += -lFLAC
 win32: LIBS += -lfreetype
@@ -34,6 +52,7 @@ win32: LIBS += -lphysfs
 win32: LIBS += -ltheora
 win32: LIBS += -lvorbis
 win32: LIBS += -lvorbisfile
+# Static linking dependencies
 win32: LIBS += -lgdiplus
 win32: LIBS += -luuid
 win32: LIBS += -lkernel32
@@ -49,17 +68,16 @@ win32: LIBS += -lole32
 win32: LIBS += -ladvapi32
 win32: LIBS += -lws2_32
 win32: LIBS += -lshlwapi
+# Add Allegro to include path in windows
+win32: INCLUDEPATH += $$PWD/../Allegro/mingw32/include
+win32: DEPENDPATH += $$PWD/../Allegro/mingw32/include
 
-INCLUDEPATH += $$PWD/../Allegro/mingw32/include
-DEPENDPATH += $$PWD/../Allegro/mingw32/include
-
-QMAKE_CXXFLAGS += -std='c++11'
-
-HEADERS += \
-    assertions.hpp \
-    config.hpp \
-    common.hpp \
-    gameloop.hpp \
-    memory.hpp \
-    tileset.hpp \
-    tilesetconfigs.hpp
+# On Linux it is easy and fun to compile libraries, yay!
+# Just link directly against them
+# Allegro (built into a single monolithic binary, joy!)
+unix:!macx: LIBS += -lallegro_monolith-static
+# Allegro's dependencies
+unix:!macx: LIBS += -lXcursor
+unix:!macx: LIBS += -lX11
+unix:!macx: LIBS += -lpthread
+unix:!macx: LIBS += -lGL
