@@ -1,0 +1,36 @@
+Swords
+	+? Short 
+	+? Falchion
+	+ Long
+	+ Bastard
+	+ Zweihander
+Knives
+	+ Knife
+	- Dirk
+	- Dagger
+Bows
+	+ Shortbow
+	+ Longbow
+	+ Recurve Bow
+Spears
+	+ Spear
+	- Javelin
+	- Trident
+Axes
+	+ Handaxe
+	+ Waraxe
+	+ Poleaxe
+Exotic
+	+ Katana
+	- Nunchuck
+	- Double Bladed
+Maces
+	+ Mace
+	+ Cudgel
+	+? Club 
+	+? Staff
+	+ Flail
+Shield
+	- Buckler
+	- Kite Shield
+	- Tower Shield

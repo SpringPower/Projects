@@ -1,0 +1,4 @@
+These are precompiled binaries of the Allegro Library and its dependencies, as well as headers for using them.
+Allegro and its dependencies (DUMB/libFLAC/FreeType/PhysFS/Theora/Vorbis/etc.) do not belong to me and have their own licenses available online.
+
+mingw32 binaries were not compiled by me but obtained here https://www.allegro.cc/forums/thread/613773/995477#target
