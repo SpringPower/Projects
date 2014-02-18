@@ -27,6 +27,7 @@ public:
     {                                                                   \
         AssertionError *ptErr = new AssertionError(__LINE__, __FILE__); \
         ptErr->ssError << "Expected " << tValue0 << " Got " << tValue1; \
+        throw ptErr;                                                    \
     }                                                                   \
 }
 
@@ -44,6 +45,7 @@ public:
     {                                                                   \
         AssertionError *ptErr = new AssertionError(__LINE__, __FILE__); \
         ptErr->ssError << "Expected " << tValue0 << " != " << tValue1;  \
+        throw ptErr;                                                    \
     }                                                                   \
 }
 
@@ -53,6 +55,7 @@ public:
     {                                                                   \
         AssertionError *ptErr = new AssertionError(__LINE__, __FILE__); \
         ptErr->ssError << "Expected NULL " << " != " << pvPtr;          \
+        throw ptErr;                                                    \
     }                                                                   \
 }
 
@@ -60,6 +63,7 @@ public:
 {                                                                   \
     AssertionError *ptErr = new AssertionError(__LINE__, __FILE__); \
     ptErr->ssError << szMessage;                                    \
+    throw ptErr;                                                    \
 }
 
 #ifdef DEBUG

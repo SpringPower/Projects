@@ -11,4 +11,11 @@ typedef unsigned long long ulonglong;
 
 #define UNREFERNCED_PARAMETER(ptParam) (void)(ptParam)
 
+#define ARRAY_ENTRIES(atArray) (sizeof(atArray)/sizeof(*atArray))
+
+#define TILE_WIDTH (16)
+#define TILE_HEIGHT (16)
+#define FONT_WIDTH (8)
+#define FONT_HEIGHT (16)
+
 #endif // COMMON_HPP

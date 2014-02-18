@@ -1,5 +1,6 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_image.h>
 #include "gameloop.hpp"
 
 GameLoop::GameLoop():
@@ -12,6 +13,7 @@ void GameLoop::Initialize(ALLEGRO_FILE *ptConfigPath)
     LoadConfig(ptConfigPath, m_tConfig);
 
     EXPECT_TRUE(al_init());
+    EXPECT_TRUE(al_init_image_addon());
     EXPECT_TRUE(al_install_keyboard());
     EXPECT_TRUE(al_install_mouse());
     EXPECT_TRUE(al_install_joystick());

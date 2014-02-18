@@ -1,18 +1,24 @@
 #include <iostream>
 #include <allegro5/allegro_primitives.h>
 #include "gameloop.hpp"
+#include "textdrawer.hpp"
 
 using namespace std;
 
 class Printer: public GameLoop::EventsListener
 {
 public:
-    Printer(){}
+    Printer(PTilesetFactory ptFactory):
+        m_ptTilesetFactory(ptFactory),
+        m_tDrawer(m_ptTilesetFactory),
+        m_tStr("123456789012345678901234567890123456789123456789012345678912345678901234567891234567890123456789123456789012345678912345678901234567891234567890123456789123456789012345678912345678901234567891234567890123456789123456789012345678912345678901234567891234567890123456789123456789012345678912345678901234567891234567890123456789123456789012345678912345678901234567891234567890123456789")
+    {}
     virtual~Printer(){}
 
     virtual bool AllegroEvent(
         const ALLEGRO_EVENT &crtEvent)
     {
+        std::stringstream ssStream;
         switch (crtEvent.type)
         {
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
@@ -22,7 +28,7 @@ public:
         case ALLEGRO_EVENT_KEY_CHAR:
         case ALLEGRO_EVENT_KEY_UP:
         case ALLEGRO_EVENT_KEY_DOWN:
-            std::cout<<"Keybaord: KC: "
+            ssStream    <<"Keybaord: KC: "
                         <<crtEvent.keyboard.keycode
                         <<" UCHAR: "
                         <<((wchar_t)crtEvent.keyboard.unichar)
@@ -46,7 +52,7 @@ public:
         case ALLEGRO_EVENT_JOYSTICK_AXIS:
         case ALLEGRO_EVENT_JOYSTICK_BUTTON_DOWN:
         case ALLEGRO_EVENT_JOYSTICK_BUTTON_UP:
-            std::cout<<"Joystick: TYPE: "
+            ssStream    <<"Joystick: TYPE: "
                         <<crtEvent.joystick.type
                         <<" AXIS: "
                         <<crtEvent.joystick.axis
@@ -61,6 +67,8 @@ public:
                         <<std::endl;
             break;
         }
+        std::cout << ssStream.str();
+        //m_tStr = ssStream.str();
         return true;
     }
 
@@ -82,9 +90,14 @@ public:
         UNREFERNCED_PARAMETER(rptDisplay);
         UNREFERNCED_PARAMETER(dLength);
         al_draw_line(0, 0, 50, 100, al_map_rgb(255,0,0), 1.0);
+        m_tDrawer.WritePixel(m_tStr, Square(54, 54, 154, 154));
         al_flip_display();
         return true;
     }
+
+    PTilesetFactory m_ptTilesetFactory;
+    TextDrawer m_tDrawer;
+    std::string m_tStr;
 };
 
 int main()
@@ -95,10 +108,12 @@ int main()
     EXPECT_NOT_NULL(ptFile);
 
     GameLoop tLoop;
-    Printer tPrinter;
 
     tLoop.Initialize(ptFile);
 
+    PTilesetFactory ptFactory;
+    ptFactory = new TilesetFactory();
+    Printer tPrinter(ptFactory);
     al_fclose(ptFile);
 
     tLoop.Start(tPrinter);

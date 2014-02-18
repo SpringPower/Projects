@@ -43,6 +43,12 @@ public:
         Memory::AddRef(static_cast<ObjBase*>(m_ptPointer));
     }
 
+    ObjPointer(T *ptObj):
+        m_ptPointer(ptObj)
+    {
+        Memory::AddRef(static_cast<ObjBase*>(ptObj));
+    }
+
     virtual ~ObjPointer()
     {
         Release();
@@ -76,6 +82,7 @@ public:
     ObjPointer &operator=(const ObjPointer &crpOther)
     {
         (*this) = crpOther.m_ptPointer;
+        return *this;
     }
 
     // Allow our inner pointer to be used transparently

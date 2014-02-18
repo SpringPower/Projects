@@ -9,7 +9,7 @@ SOURCES += main.cpp \
     gameloop.cpp \
     memory.cpp \
     tileset.cpp \
-    tilesetconfigs.cpp
+    textdrawer.cpp
 
 # OH YEAH!
 QMAKE_CXXFLAGS += -std='c++11'
@@ -21,7 +21,7 @@ HEADERS += \
     gameloop.hpp \
     memory.hpp \
     tileset.hpp \
-    tilesetconfigs.hpp
+    textdrawer.hpp
 
 # Libraries!
 
@@ -81,3 +81,8 @@ unix:!macx: LIBS += -lXcursor
 unix:!macx: LIBS += -lX11
 unix:!macx: LIBS += -lpthread
 unix:!macx: LIBS += -lGL
+unix:!macx: LIBS += -lpng   # Allegro Image Addon
+unix:!macx: LIBS += -ljpeg  # Allegro Image Addon
+
+OTHER_FILES += \
+    resources/config.ini

@@ -50,7 +50,7 @@ void
 SanitizeConfig(
     CONFIG  &rtConfig)
 {
-    if ((ulong)al_get_num_video_adapters() <= rtConfig.ulCreationDisplay)
+    if ((0 != rtConfig.ulCreationDisplay) && ((ulong)al_get_num_video_adapters() <= rtConfig.ulCreationDisplay))
     {
         LOG("Display creation index invalid, resetting to 0");
         rtConfig.ulCreationDisplay = 0;
