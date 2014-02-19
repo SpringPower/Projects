@@ -102,7 +102,7 @@ void TextDrawer::WritePixel(const std::string &crStr, const Square &tArea)
 
     std::vector<std::string> atLines = SplitToLines(crStr, nColumns);
 
-    for (ulong i=0; i<std::min(nLines, atLines.size()); ++i)
+    for (ulong i=0; i<std::min((size_t)nLines, atLines.size()); ++i)
     {
         const std::string &crtLine = atLines.at(i);
         for (ulong j=0; j<crtLine.size(); ++j)

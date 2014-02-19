@@ -1,13 +1,11 @@
 #include "tileset.hpp"
 
 Tileset::Tileset::Tileset(
-    ALLEGRO_FILE *ptFile,
+    ALLEGRO_BITMAP *ptBitmap,
     const TilesetConfig &rtConfig):
+    m_ptBitmap(ptBitmap),
     m_nSubBitmaps(rtConfig.size())
 {
-    m_ptBitmap = al_load_bitmap_f(ptFile, ".png");
-    EXPECT_NOT_NULL(m_ptBitmap);
-
     m_pptSubBitmaps = new ALLEGRO_BITMAP*[m_nSubBitmaps];
     EXPECT_NOT_NULL(m_pptSubBitmaps);
 
@@ -44,37 +42,37 @@ GetWeaponTilesetConfig()
     const int iWidth = TILE_WIDTH;
     const int iHeight = TILE_HEIGHT;
 
-    atConfig.resize(WEAPON_NUM);
+    atConfig.resize(TILESET_WEAPON_NUM);
 
-    atConfig[WEAPON_NONE         ] = Square(  0,   0, iWidth, iHeight);
-    atConfig[WEAPON_SHORTSWORD   ] = Square( 16,   0, iWidth, iHeight);
-    atConfig[WEAPON_FALCHION     ] = Square( 32,   0, iWidth, iHeight);
-    atConfig[WEAPON_LONGSWORD    ] = Square( 48,   0, iWidth, iHeight);
-    atConfig[WEAPON_BASTARD_SWORD] = Square( 64,   0, iWidth, iHeight);
-    atConfig[WEAPON_ZWEIHANDER   ] = Square( 80,   0, iWidth, iHeight);
-    atConfig[WEAPON_KNIFE        ] = Square( 96,   0, iWidth, iHeight);
-    atConfig[WEAPON_DIRK         ] = Square(112,   0, iWidth, iHeight);
-    atConfig[WEAPON_DAGGER       ] = Square(  0,  16, iWidth, iHeight);
-    atConfig[WEAPON_SHORTBOW     ] = Square( 16,  16, iWidth, iHeight);
-    atConfig[WEAPON_LONGBOW      ] = Square( 32,  16, iWidth, iHeight);
-    atConfig[WEAPON_RECURVE_BOW  ] = Square( 48,  16, iWidth, iHeight);
-    atConfig[WEAPON_SPEAR        ] = Square( 64,  16, iWidth, iHeight);
-    atConfig[WEAPON_JAVELIN      ] = Square( 80,  16, iWidth, iHeight);
-    atConfig[WEAPON_TRIDENT      ] = Square( 96,  16, iWidth, iHeight);
-    atConfig[WEAPON_HANDAXE      ] = Square(112,  16, iWidth, iHeight);
-    atConfig[WEAPON_WARAXE       ] = Square(  0,  32, iWidth, iHeight);
-    atConfig[WEAPON_POLEAXE      ] = Square( 16,  32, iWidth, iHeight);
-    atConfig[WEAPON_KATANA       ] = Square( 32,  32, iWidth, iHeight);
-    atConfig[WEAPON_NUNCHUCK     ] = Square( 48,  32, iWidth, iHeight);
-    atConfig[WEAPON_DOUBLE_BLADED] = Square( 64,  32, iWidth, iHeight);
-    atConfig[WEAPON_MACE         ] = Square( 80,  32, iWidth, iHeight);
-    atConfig[WEAPON_CUDGEL       ] = Square( 96,  32, iWidth, iHeight);
-    atConfig[WEAPON_CLUB         ] = Square(112,  32, iWidth, iHeight);
-    atConfig[WEAPON_STAFF        ] = Square(  0,  48, iWidth, iHeight);
-    atConfig[WEAPON_FLAIL        ] = Square( 16,  48, iWidth, iHeight);
-    atConfig[WEAPON_BUCKLER      ] = Square( 32,  48, iWidth, iHeight);
-    atConfig[WEAPON_KITE_SHIELD  ] = Square( 48,  48, iWidth, iHeight);
-    atConfig[WEAPON_TOWER_SHIELD ] = Square( 64,  48, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_NONE         ] = Square(  0,   0, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_SHORTSWORD   ] = Square( 16,   0, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_FALCHION     ] = Square( 32,   0, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_LONGSWORD    ] = Square( 48,   0, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_BASTARD_SWORD] = Square( 64,   0, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_ZWEIHANDER   ] = Square( 80,   0, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_KNIFE        ] = Square( 96,   0, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_DIRK         ] = Square(112,   0, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_DAGGER       ] = Square(  0,  16, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_SHORTBOW     ] = Square( 16,  16, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_LONGBOW      ] = Square( 32,  16, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_RECURVE_BOW  ] = Square( 48,  16, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_SPEAR        ] = Square( 64,  16, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_JAVELIN      ] = Square( 80,  16, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_TRIDENT      ] = Square( 96,  16, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_HANDAXE      ] = Square(112,  16, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_WARAXE       ] = Square(  0,  32, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_POLEAXE      ] = Square( 16,  32, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_KATANA       ] = Square( 32,  32, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_NUNCHUCK     ] = Square( 48,  32, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_DOUBLE_BLADED] = Square( 64,  32, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_MACE         ] = Square( 80,  32, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_CUDGEL       ] = Square( 96,  32, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_CLUB         ] = Square(112,  32, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_STAFF        ] = Square(  0,  48, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_FLAIL        ] = Square( 16,  48, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_BUCKLER      ] = Square( 32,  48, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_KITE_SHIELD  ] = Square( 48,  48, iWidth, iHeight);
+    atConfig[TILESET_WEAPON_TOWER_SHIELD ] = Square( 64,  48, iWidth, iHeight);
 
     return std::move(atConfig);
 }
@@ -87,24 +85,24 @@ GetArchitechtureConfig()
     const int iWidth = TILE_WIDTH;
     const int iHeight = TILE_HEIGHT;
 
-    atConfig.resize(ARCH_WALL_NUM);
+    atConfig.resize(TILESET_ARCH_WALL_NUM);
 
-    atConfig[ARCH_WALL_N   ] = Square(  0,   0, iWidth, iHeight);
-    atConfig[ARCH_WALL_E   ] = Square( 16,   0, iWidth, iHeight);
-    atConfig[ARCH_WALL_S   ] = Square( 16,  16, iWidth, iHeight);
-    atConfig[ARCH_WALL_W   ] = Square(  0,  16, iWidth, iHeight);
-    atConfig[ARCH_WALL_SE  ] = Square( 32,   0, iWidth, iHeight);
-    atConfig[ARCH_WALL_SW  ] = Square( 48,   0, iWidth, iHeight);
-    atConfig[ARCH_WALL_NW  ] = Square( 48,  16, iWidth, iHeight);
-    atConfig[ARCH_WALL_NE  ] = Square( 32,  16, iWidth, iHeight);
-    atConfig[ARCH_WALL_SEW ] = Square(  0,  32, iWidth, iHeight);
-    atConfig[ARCH_WALL_NSW ] = Square( 16,  32, iWidth, iHeight);
-    atConfig[ARCH_WALL_NEW ] = Square( 16,  48, iWidth, iHeight);
-    atConfig[ARCH_WALL_NSE ] = Square(  0,  48, iWidth, iHeight);
-    atConfig[ARCH_WALL_EW  ] = Square( 32,  32, iWidth, iHeight);
-    atConfig[ARCH_WALL_NS  ] = Square( 48,  32, iWidth, iHeight);
-    atConfig[ARCH_WALL_NSEW] = Square( 48,  48, iWidth, iHeight);
-    atConfig[ARCH_WALL_NONE] = Square( 32,  48, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_N   ] = Square(  0,   0, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_E   ] = Square( 16,   0, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_S   ] = Square( 16,  16, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_W   ] = Square(  0,  16, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_SE  ] = Square( 32,   0, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_SW  ] = Square( 48,   0, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_NW  ] = Square( 48,  16, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_NE  ] = Square( 32,  16, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_SEW ] = Square(  0,  32, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_NSW ] = Square( 16,  32, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_NEW ] = Square( 16,  48, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_NSE ] = Square(  0,  48, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_EW  ] = Square( 32,  32, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_NS  ] = Square( 48,  32, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_NSEW] = Square( 48,  48, iWidth, iHeight);
+    atConfig[TILESET_ARCH_WALL_NONE] = Square( 32,  48, iWidth, iHeight);
 
     return std::move(atConfig);
 }
@@ -165,16 +163,25 @@ const TILESET_CONFIG g_aeFileToConfig[] =
 };
 static_assert(ARRAY_ENTRIES(g_aeFileToConfig) == TILESET_NUM, "Number of configs does not match FILE_NUM");
 
-ALLEGRO_FILE *
+ALLEGRO_BITMAP *
 GetTilesetFile(
     TILESET eFile)
 {
+#ifndef BUILD_WINDOWS // Currently a bug in the build/Allegro prevents al_load_bitmap_f from working right
     EXPECT_TRUE(TILESET_NUM > eFile);
 
     ALLEGRO_FILE *ptFile = al_fopen(g_apszTilesetFiles[eFile], "r");
     EXPECT_NOT_NULL(ptFile);
 
-    return ptFile;
+    ALLEGRO_BITMAP *ptBitmap = al_load_bitmap_f(ptFile, ".png");
+    EXPECT_NOT_NULL(ptBitmap);
+
+    al_fclose(ptFile);
+#else
+    ALLEGRO_BITMAP *ptBitmap = al_load_bitmap(g_apszTilesetFiles[eFile]);
+#endif
+
+    return ptBitmap;
 }
 
 
@@ -197,12 +204,10 @@ PTileset TilesetFactory::_GetTileset(TILESET eTileset)
 
     EXPECT_TRUE(TILESET_NUM > eTileset);
 
-    ALLEGRO_FILE *ptFile = GetTilesetFile(eTileset);
+    ALLEGRO_BITMAP *ptBitmap = GetTilesetFile(eTileset);
     TilesetConfig tConfig = GetTilesetConfig(g_aeFileToConfig[eTileset]);
 
-    tTileset = new Tileset(ptFile, tConfig);
-
-    al_fclose(ptFile);
+    tTileset = new Tileset(ptBitmap, tConfig);
 
     return std::move(tTileset);
 }

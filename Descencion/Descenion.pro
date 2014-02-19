@@ -23,6 +23,9 @@ HEADERS += \
     tileset.hpp \
     textdrawer.hpp
 
+win32: DEFINES += BUILD_WINDOWS
+unix:!macx: DEFINES += BUILD_LINUX
+
 # Libraries!
 
 # Windows Libraries

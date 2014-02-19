@@ -68,7 +68,7 @@ public:
             break;
         }
         std::cout << ssStream.str();
-        //m_tStr = ssStream.str();
+        m_tStr = ssStream.str();
         return true;
     }
 
@@ -104,19 +104,26 @@ int main()
 {
     cout << "Hello World!" << endl;
 
-    ALLEGRO_FILE *ptFile = al_fopen("./resources/config.ini", "r");
-    EXPECT_NOT_NULL(ptFile);
+    try
+    {
+        ALLEGRO_FILE *ptFile = al_fopen("./resources/config.ini", "r");
+        EXPECT_NOT_NULL(ptFile);
 
-    GameLoop tLoop;
+        GameLoop tLoop;
 
-    tLoop.Initialize(ptFile);
+        tLoop.Initialize(ptFile);
 
-    PTilesetFactory ptFactory;
-    ptFactory = new TilesetFactory();
-    Printer tPrinter(ptFactory);
-    al_fclose(ptFile);
+        PTilesetFactory ptFactory;
+        ptFactory = new TilesetFactory();
+        Printer tPrinter(ptFactory);
+        al_fclose(ptFile);
 
-    tLoop.Start(tPrinter);
+        tLoop.Start(tPrinter);
+    }
+    catch (AssertionError *e)
+    {
+        std::cout<<e->ssError.str();
+    }
 
     return 0;
 }
