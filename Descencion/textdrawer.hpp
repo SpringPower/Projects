@@ -10,7 +10,11 @@ class TextDrawer : public ObjBase
 public:
     TextDrawer(PTilesetFactory ptTilesetFactory);
 
+    // Write a string to a certain area denoted by tiles
+    // (x of starting tile, y of starting tile, width, height)
     void WriteTile(const std::string &crStr, const Square &tArea);
+    // Write a string to a certain area denoted by pixels
+    // (x of starting tile, y of starting tile, width, height)
     void WritePixel(const std::string &crStr, const Square &tArea);
 
 private:
@@ -19,5 +23,6 @@ private:
 private:
     PTileset m_ptFont;
 };
+typedef ObjPointer<TextDrawer> PTextDrawer;
 
 #endif // TEXTDRAWER_HPP

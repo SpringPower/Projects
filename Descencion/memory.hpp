@@ -81,7 +81,7 @@ public:
 
     ObjPointer &operator=(const ObjPointer &crpOther)
     {
-        (*this) = crpOther.m_ptPointer;
+        (*this) = crpOther.m_ptPointer; // Use the pointer operator=
         return *this;
     }
 

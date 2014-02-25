@@ -6,7 +6,6 @@
 #include <allegro5/allegro5.h>
 #include "memory.hpp"
 
-typedef std::tuple<int, int, int, int> Square;
 typedef std::vector<Square> TilesetConfig;
 
 class Tileset: public ObjBase

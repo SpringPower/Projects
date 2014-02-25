@@ -45,6 +45,22 @@ public:
         case ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY:
         case ALLEGRO_EVENT_MOUSE_LEAVE_DISPLAY:
         case ALLEGRO_EVENT_MOUSE_WARPED:
+            ssStream    <<"Mouse: BUTTON: "
+                        <<crtEvent.mouse.button
+                        <<" W: "
+                        <<crtEvent.mouse.w
+                        <<" X: "
+                        <<crtEvent.mouse.x
+                        <<" Y: "
+                        <<crtEvent.mouse.y
+                        <<" Z: "
+                        <<crtEvent.mouse.z
+                        <<" PRESSURE:"
+                        <<crtEvent.mouse.pressure
+                        <<" DX: "
+                        <<crtEvent.mouse.dx
+                        <<" DY: "
+                        <<crtEvent.mouse.dy;
             break;
 
         case ALLEGRO_EVENT_JOYSTICK_CONFIGURATION:
@@ -89,6 +105,7 @@ public:
         UNREFERNCED_PARAMETER(crtEvent);
         UNREFERNCED_PARAMETER(rptDisplay);
         UNREFERNCED_PARAMETER(dLength);
+        al_clear_to_color(al_map_rgb(0, 0, 0));
         al_draw_line(0, 0, 50, 100, al_map_rgb(255,0,0), 1.0);
         m_tDrawer.WritePixel(m_tStr, Square(54, 54, 154, 154));
         al_flip_display();

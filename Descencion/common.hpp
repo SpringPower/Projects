@@ -6,6 +6,7 @@
 
 typedef unsigned long ulong;
 typedef unsigned long long ulonglong;
+typedef std::tuple<int, int, int, int> Square;
 
 #define LOG(pszMessage) std::cerr<<(pszMessage)<<std::endl
 

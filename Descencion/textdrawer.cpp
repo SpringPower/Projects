@@ -59,7 +59,7 @@ std::vector<std::string> SplitLine(const std::string &crStr, ulong nMaxLen)
             break;
         }
 
-        while ((i < atWords.size()) && (ssLine.str().size() + atWords.at(i).size() + 1 <= nMaxLen))
+        while ((i < atWords.size()) && (ssLine.str().size() + atWords.at(i).size() + 1 < nMaxLen))
         {
             ssLine << ' ' << atWords.at(i);
             ++i;
@@ -95,6 +95,9 @@ void TextDrawer::_WriteChar(char c, ulong x, ulong y)
 
 void TextDrawer::WritePixel(const std::string &crStr, const Square &tArea)
 {
+    EXPECT_TRUE(std::get<2>(tArea) > 0);
+    EXPECT_TRUE(std::get<3>(tArea) > 0);
+
     const ulong ulXStart = std::get<0>(tArea);
     const ulong ulYStart = std::get<1>(tArea);
     const ulong nColumns = std::get<2>(tArea) / FONT_WIDTH;

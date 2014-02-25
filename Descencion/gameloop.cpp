@@ -73,6 +73,7 @@ void GameLoop::Start(
     al_start_timer(ptTimer);
 
     bool bRunning = true;
+    double dNow = 0;
 
     while (bRunning)
     {
@@ -81,15 +82,17 @@ void GameLoop::Start(
         switch(tEvent.type)
         {
         case ALLEGRO_EVENT_TIMER:
-            if (tEvent.timer.timestamp < al_get_time() - 1.0/m_tConfig.ulMinFps)
+            dNow = al_get_time();
+            if (tEvent.timer.timestamp < dNow - 1.0/m_tConfig.ulMinFps)
             {
+                // Event is too old, drop it
                 break;
             }
-            bRunning = rtListener.LogicEvent(tEvent, 1.0/m_tConfig.ulMaxFps);
+            bRunning = rtListener.LogicEvent(tEvent, dNow - tEvent.timer.timestamp);
 
             if (bRunning)
             {
-                bRunning = rtListener.DrawEvent(tEvent, m_ptDisplay, 1.0/m_tConfig.ulMaxFps);
+                bRunning = rtListener.DrawEvent(tEvent, m_ptDisplay, dNow - tEvent.timer.timestamp);
             }
 
             break;

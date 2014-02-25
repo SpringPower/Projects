@@ -9,7 +9,8 @@ SOURCES += main.cpp \
     gameloop.cpp \
     memory.cpp \
     tileset.cpp \
-    textdrawer.cpp
+    textdrawer.cpp \
+    gameobj.cpp
 
 # OH YEAH!
 QMAKE_CXXFLAGS += -std='c++11'
@@ -21,7 +22,8 @@ HEADERS += \
     gameloop.hpp \
     memory.hpp \
     tileset.hpp \
-    textdrawer.hpp
+    textdrawer.hpp \
+    gameobj.hpp
 
 win32: DEFINES += BUILD_WINDOWS
 unix:!macx: DEFINES += BUILD_LINUX
