@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
 #include "serialization.hpp"
-
+#include <typeinfo>
+#include <queue>
 
 using namespace std;
 
@@ -24,6 +25,12 @@ public:
     NAME_TYPE(0, character);
     NAME_TYPE(1, intint);
 };
+
+template <class T>
+void Foo()
+{
+    cout<<typeid(T).name()<<endl;
+}
 
 int main()
 {

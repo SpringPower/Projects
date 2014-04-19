@@ -2,29 +2,24 @@ TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
-CONFIG += static
 
 SOURCES += main.cpp \
-    config.cpp \
-    gameloop.cpp \
-    memory.cpp \
-    tileset.cpp \
-    textdrawer.cpp \
-    tileobj.cpp
-
-# OH YEAH!
-QMAKE_CXXFLAGS += -std='c++11'
+    ../Common/gameloop.cpp \
+    ../Common/config.cpp \
+    eventqueue.cpp
 
 HEADERS += \
-    assertions.hpp \
-    config.hpp \
-    common.hpp \
-    gameloop.hpp \
-    memory.hpp \
-    tileset.hpp \
-    textdrawer.hpp \
-    tileobj.hpp \
-    serialization.hpp
+    ../Common/assertions.hpp \
+    ../Common/common.hpp \
+    ../Common/gameloop.hpp \
+    ../Common/config.hpp \
+    eventqueue.hpp
+
+INCLUDEPATH += ../Common/
+
+QMAKE_CXXFLAGS += -std=c++11
+
+CONFIG += static
 
 win32: DEFINES += BUILD_WINDOWS
 unix:!macx: DEFINES += BUILD_LINUX
@@ -89,6 +84,3 @@ unix:!macx: LIBS += -lpthread
 unix:!macx: LIBS += -lGL
 unix:!macx: LIBS += -lpng   # Allegro Image Addon
 unix:!macx: LIBS += -ljpeg  # Allegro Image Addon
-
-OTHER_FILES += \
-    resources/config.ini

@@ -28,7 +28,7 @@ public:
         case ALLEGRO_EVENT_KEY_CHAR:
         case ALLEGRO_EVENT_KEY_UP:
         case ALLEGRO_EVENT_KEY_DOWN:
-            ssStream    <<"Keybaord: KC: "
+            ssStream    <<"Keyboard: KC: "
                         <<crtEvent.keyboard.keycode
                         <<" UCHAR: "
                         <<((wchar_t)crtEvent.keyboard.unichar)

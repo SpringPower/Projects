@@ -10,6 +10,7 @@ namespace Serialization
 {
 
 typedef std::list<unsigned char> Buffer;
+typedef ulonglong size_type;
 
 class ISerializeable
 {
@@ -18,7 +19,7 @@ public:
     virtual~ISerializeable(){}
 
     virtual void Serialize(Buffer &atBuffer) const = 0;
-    virtual size_t Size() const = 0;
+    virtual size_type Size() const = 0;
     virtual void Deserialize(Buffer &atBuffer) = 0;
 };
 
@@ -26,9 +27,10 @@ template <class T>
 typename std::enable_if<std::is_fundamental<T>::value, void>::type
 SerializeT(const T &tObj, Buffer &atBuffer)
 {
-    const unsigned char *ptObj = (reinterpret_cast<unsigned char*>(tObj));
+    const unsigned char *ptObj = (reinterpret_cast<unsigned char*>(
+                                  const_cast<T*>(&tObj)));
 
-    for (size_t i=0; i<sizeof(T); ++i)
+    for (size_type i=0; i<sizeof(T); ++i)
     {
         atBuffer.push_back(*(ptObj+i));
     }
@@ -45,11 +47,11 @@ template <class T>
 typename std::enable_if<(!std::is_base_of<ISerializeable, T>::value) && (!std::is_fundamental<T>::value), void>::type
 SerializeT(const T &tObj, Buffer &atBuffer)
 {
-    size_t nElements = tObj.size();
+    size_type nElements = tObj.size();
 
     SerializeT(nElements, atBuffer);
 
-    for (size_t i=0; i<nElements; ++i)
+    for (size_type i=0; i<nElements; ++i)
     {
         SerializeT(tObj[i], atBuffer);
     }
@@ -59,7 +61,7 @@ template <class T>
 typename std::enable_if<std::is_fundamental<T>::value, void>::type
 DeserializeT(T &tObj, Buffer &atBuffer)
 {
-    for (size_t i=0; i<sizeof(T); ++i)
+    for (size_type i=0; i<sizeof(T); ++i)
     {
         (*(reinterpret_cast<unsigned char*>(tObj)+i)) = atBuffer.front();
         atBuffer.pop_front();
@@ -77,18 +79,18 @@ template <class T>
 typename std::enable_if<(!std::is_base_of<ISerializeable, T>::value) && (!std::is_fundamental<T>::value), void>::type
 DeserializeT(T &tObj, Buffer &atBuffer)
 {
-    size_t nElements = 0;
+    size_type nElements = 0;
 
     DeserializeT(nElements, atBuffer);
 
-    for (size_t i=0; i<nElements; ++i)
+    for (size_type i=0; i<nElements; ++i)
     {
         DeserializeT(tObj[i], atBuffer);
     }
 }
 
 template <class T>
-typename std::enable_if<std::is_fundamental<T>::value, size_t>::type
+typename std::enable_if<std::is_fundamental<T>::value, size_type>::type
 SizeT(const T& tObj)
 {
     UNREFERNCED_PARAMETER(tObj);
@@ -96,20 +98,20 @@ SizeT(const T& tObj)
 }
 
 template <class T>
-typename std::enable_if<std::is_base_of<ISerializeable, T>::value, size_t>::type
+typename std::enable_if<std::is_base_of<ISerializeable, T>::value, size_type>::type
 SizeT(const T& tObj)
 {
     return tObj.Size();
 }
 
 template <class T>
-typename std::enable_if<(!std::is_base_of<ISerializeable, T>::value) && (!std::is_fundamental<T>::value), size_t>::type
+typename std::enable_if<(!std::is_base_of<ISerializeable, T>::value) && (!std::is_fundamental<T>::value), size_type>::type
 SizeT(const T& tObj)
 {
-    size_t nElements = tObj.size();
-    size_t cbSize = SizeT(nElements);
+    size_type nElements = tObj.size();
+    size_type cbSize = SizeT(nElements);
 
-    for (size_t i=0; i<nElements; ++i)
+    for (size_type i=0; i<nElements; ++i)
     {
         cbSize += SizeT(tObj[i]);
     }
@@ -132,7 +134,7 @@ struct Serializer
         Serialization::DeserializeT(std::get<i>(tTup), atBuffer);
     }
 
-    static size_t Size(const TUPLE &tTup)
+    static size_type Size(const TUPLE &tTup)
     {
         return Serialization::SizeT<typename std::tuple_element<i, TUPLE>::type>(std::get<i>(tTup)) +
                 Serializer<TUPLE, i-1>::Size(tTup);
@@ -148,7 +150,7 @@ struct Serializer <TUPLE, -1>
         UNREFERNCED_PARAMETER(atBuffer);
     }
 
-    static size_t Deserialize(TUPLE &tTup, Buffer &atBuffer)
+    static size_type Deserialize(TUPLE &tTup, Buffer &atBuffer)
     {
         UNREFERNCED_PARAMETER(tTup);
         UNREFERNCED_PARAMETER(atBuffer);
@@ -156,7 +158,7 @@ struct Serializer <TUPLE, -1>
         return 0;
     }
 
-    static size_t Size(const TUPLE &tTup)
+    static size_type Size(const TUPLE &tTup)
     {
         UNREFERNCED_PARAMETER(tTup);
 
@@ -176,7 +178,7 @@ public:
         Serializer<TupleType, std::tuple_size<TupleType>::value-1>::Serialize(m_tTuple, atBuffer);
     }
 
-    virtual size_t Size() const
+    virtual size_type Size() const
     {
         return Serializer<TupleType, std::tuple_size<TupleType>::value-1>::Size(m_tTuple);
     }
@@ -186,7 +188,6 @@ public:
         Serializer<TupleType, std::tuple_size<TupleType>::value-1>::Deserialize(m_tTuple, atBuffer);
     }
 
-//protected:
     typedef std::tuple<Args...> TupleType;
     TupleType m_tTuple;
 };
